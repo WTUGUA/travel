@@ -168,8 +168,6 @@ class _FindPageState extends State<FindPage> {
                 print("操作成功");
                 eventBus.fire(LanguageEvent("change"));
                 Navigator.of(context).pop();
-//                Navigator.push(context, new MaterialPageRoute(
-//                    builder: (context) => new MainPage()));
               },
               child: Container(
                 height: ScreenUtil.instance.setHeight(54),

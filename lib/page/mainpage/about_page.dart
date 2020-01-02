@@ -19,10 +19,10 @@ class _AboutPageState extends State<AboutPage> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    height: 30,
+                    height: ScreenUtil.instance.setHeight(30),
                   ),
                   Container(
-                    height: 40,
+                    height: ScreenUtil.instance.setHeight(40),
                     child: Row(
                       children: <Widget>[
                         IconButton(
@@ -40,7 +40,7 @@ class _AboutPageState extends State<AboutPage> {
                     ),
                   ),
                   Container(
-                    height: 550,
+                    height: ScreenUtil.instance.setHeight(550),
                       child:Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class _AboutPageState extends State<AboutPage> {
                                 image: AssetImage("images/logo.png"),
                               ),
                               Container(
-                                height: 10,
+                                height: ScreenUtil.instance.setHeight(10),
                               ),
                               Text(
                                 '版本号 1.0.0',
