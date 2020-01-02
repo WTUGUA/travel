@@ -16,6 +16,7 @@ import 'package:ocr_plugin/ocr_plugin.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 import 'package:traveltranslation/ocr/components/ocr/ocr_result_page.dart';
+import 'package:traveltranslation/utils/travelsp.dart';
 
 class ShowPicturePage extends StatefulWidget {
   final String imagePath;
@@ -46,9 +47,6 @@ class _ShowPicturePageState extends State<ShowPicturePage> {
   //裁剪图片
   Future _cropImage() async {
     File croppedFile = await ImageCropper.cropImage(
-      sourcePath: this.widget.imagePath,
-//      ratioX: 1.0,
-//      ratioY: 1.0,
       maxWidth: 512,
       maxHeight: 512,
     );
@@ -75,6 +73,7 @@ class _ShowPicturePageState extends State<ShowPicturePage> {
     EventUtil.beginPageView("show_pic_page");
     _image = File(this.widget.imagePath);
     initOcrSdk();
+    //初始化试用次数
     super.initState();
   }
 
@@ -90,11 +89,42 @@ class _ShowPicturePageState extends State<ShowPicturePage> {
 
   void recognize() async {
     EventUtil.onEvent(EventUtil.aSureOcrClick);
-    if (pr == null) {
-      initProgressDialog();
+    bool checkResult =
+    await CheckServiceDelegate.checkService(CheckServiceDelegate.ocrNum);
+    if(checkResult) {
+      if (pr == null) {
+        initProgressDialog();
+      }
+      pr.show();
+      _reco();
+    }else{
+      print("达到最大次数");
+      //引导用户登录
+      if (UserDelegate.getUserState() == UserStatus.GUEST) {
+        EventUtil.onEvent(EventUtil.aSurePopLoginPageView);
+        showDialog<Null>(
+            context: context, //BuildContext对象
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return new LeadLoginDialog();
+            }).then((value) {});
+      } else if (UserDelegate.getUserState() == UserStatus.GENERAL) {
+        //提示用户升级未VIP
+        SpUtils.getUserMap().then((value) {
+          var ocrNum = value.analysis.ocrMaxNum;
+          var transNum = value.analysis.translateMaxNum;
+          var batchNum = value.analysis.batchMaxNum;
+          //提示用户升级未VIP
+          showDialog<Null>(
+              context: context, //BuildContext对象
+              barrierDismissible: false,
+              builder: (BuildContext context) {
+                return new LeadVipDialog(ocrNum, transNum, batchNum);
+              });
+        });
+      }
+
     }
-    pr.show();
-    _reco();
   }
 
   var ocrResultMsg;

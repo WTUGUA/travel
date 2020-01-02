@@ -58,6 +58,8 @@ class AppColor {
   static var LoginBT1Color=Color(0x666E5EEE);
   static var dialogueColor=Color(0xFF6E5EEE);
   static var LoginLineColor=Color(0xFFEFEFF4);
+  //曲线色值
+  static var lineColor=Color(0xECEAFC);
 
 
 

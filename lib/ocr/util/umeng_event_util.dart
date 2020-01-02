@@ -37,6 +37,24 @@ class EventUtil {
   static final String threeMonthClick = "three_month_click";
   static final String lifetimeClick = "lifetime_click";
 
+  ///翻译埋点
+  static final String loginClick = "login";
+  static final String codeClick = "code";
+  static final String translateClick = "translate";
+  static final String seek_langugeClick = "seek_languge";
+  static final String camearClick = "camear";
+  static final String dialogueClick = "dialogue";
+  static final String sayClick = "say";
+  static final String tetionClick = "tetion";
+  static final String my_indexClick = "my_index";
+  static final String couple_backClick = "couple_back";
+  static final String my_helpClick = "my_help";
+  static final String my_about_usClick = "my_about_us";
+  static final String offline_tsClick = "offline_ts";
+  static final String del_allClick = "del_all";
+
+
+
   static void onEvent(String eventId, {String label}) {
     print("onEvent$eventId");
     if (label == null) {
@@ -60,8 +78,8 @@ class EventUtil {
        channel = await UmengPlugin.getChannel();
     }
     UmengPlugin.init(
-      iOSAppKey: "5d84b18b4ca3576f48000bc8",
-      androidAppKey: "5d5fbd46570df317b1000397",
+      iOSAppKey: "5e0b0313570df39cf40009b3",
+      androidAppKey: "5e0b02e5cb23d29e5f0008fa",
       channel: channel
     );
   }

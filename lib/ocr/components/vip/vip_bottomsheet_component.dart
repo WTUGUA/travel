@@ -36,33 +36,36 @@ class _PayChooseState extends State<PayChoose> {
           ),
           title: Text("选择支付方式"),
         ),
-        InkWell(
-          onTap: () {
-            if (!chooseWechat) {
-              print("选择了微信");
-              chooseWechat = !chooseWechat;
-              setState(() {
+        Offstage(
+          offstage: true,
+          child: InkWell(
+            onTap: () {
+              if (!chooseWechat) {
+                print("选择了微信");
+                chooseWechat = !chooseWechat;
+                setState(() {
 
-              });
-            }
-          },
-          child: ListTile(
-            trailing: chooseWechat
-                ? Image.asset(
-                    "images/icon_vip_select.png",
-                    width: 22,
-                    height: 22,
-                  )
-                : Image.asset(
-                    "images/icon_vip_unselected.png",
-                    width: 22,
-                    height: 22,
-                  ),
-            title: Text("微信"),
-            leading: Image.asset(
-              "images/icon_wechat.png",
-              width: 42,
-              height: 42,
+                });
+              }
+            },
+            child: ListTile(
+              trailing: chooseWechat
+                  ? Image.asset(
+                "images/icon_vip_select.png",
+                width: 22,
+                height: 22,
+              )
+                  : Image.asset(
+                "images/icon_vip_unselected.png",
+                width: 22,
+                height: 22,
+              ),
+              title: Text("微信"),
+              leading: Image.asset(
+                "images/icon_wechat.png",
+                width: 42,
+                height: 42,
+              ),
             ),
           ),
         ),

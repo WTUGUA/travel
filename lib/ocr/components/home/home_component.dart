@@ -331,20 +331,6 @@ class _HomeComponentState extends State<HomeComponent>
                               height: ScreenUtil.instance.setHeight(130.0),
                               width: ScreenUtil.instance.setWidth(130.0),
                               fit: BoxFit.cover,
-                              // ignore: missing_return
-//                              loadStateChanged: (ExtendedImageState state) {
-//                                switch (state.extendedImageLoadState) {
-//                                  case LoadState.loading:
-//                                    showCount = false;
-//                                    break;
-//                                  case LoadState.completed:
-//                                    showCount = true;
-//                                    break;
-//                                  case LoadState.failed:
-//                                    showCount = false;
-//                                    break;
-//                                }
-//                              },
                             ),
                             Visibility(
                                 visible: showCount,
@@ -401,10 +387,6 @@ class _HomeComponentState extends State<HomeComponent>
           enableCamera: true,
           selectedAssets: images,
         );
-//        for (var r in resultList) {
-//          var filepath = await r.getByteData(filePath);
-//          batchImagePaths.add(filepath);
-//        }
         setState(() {
           imagePath = batchImagePaths.last;
         });
@@ -481,22 +463,6 @@ class _HomeComponentState extends State<HomeComponent>
   void onTakePictureButtonPressed() async {
     EventUtil.onEvent(EventUtil.photoTake);
 
-////    //如果是游客，批量处理张数需要限制
-//    if (UserDelegate.userStatus == UserStatus.GUEST) {
-//      var configParams =
-//          await OnlineConfigUtils.getInstance().getConfigParams(batchPerNum);
-//      int limit = 5;
-//      if (configParams.isNotEmpty) {
-//        print("configParams =${configParams}");
-//        limit = int.parse(configParams);
-//        print("kv配置最多处理$configParams张");
-//      }
-//      if (batchImagePaths.length >= limit) {
-//        Toast.show("批量处理最多$limit张", context);
-//        return null;
-//      }
-//    }
-
     try {
       final path = join(
         // Store the picture in the temp directory.
@@ -559,11 +525,6 @@ class _HomeComponentState extends State<HomeComponent>
             onPressed: () {
               //跳转到主界面
               Navigator.of(context).pop();
-//              Navigator.push(
-//                  context,
-//                  new MaterialPageRoute(
-//                      builder: (context) => new MainPage()));
-//              Application.router.navigateTo(context, "/setting");
               EventUtil.onEvent(EventUtil.setButtonClick);
             }),
         title: Container(
@@ -575,49 +536,9 @@ class _HomeComponentState extends State<HomeComponent>
           decoration: BoxDecoration(
               color: AppColor.white,
               borderRadius: BorderRadius.circular(20.0)),
-//          child: Row(
-//            mainAxisSize: MainAxisSize.max,
-//            mainAxisAlignment: MainAxisAlignment.end,
-//            children: <Widget>[
-//              Text(
-//                "批量",
-//                style: TextStyle(fontSize: 12.0),
-//              ),
-//              Switch(
-//                value: this.isBatch,
-//                activeColor: Colors.white,
-//                activeTrackColor: AppColor.switchActiveColor,
-//                onChanged: (bool val) {
-//                  if (!val) {
-//                    print("切换单张");
-//                    if (batchImagePaths.isNotEmpty) {
-//                      showSwitchModeDialog(context).then((choose) {
-//                        if (choose) {
-//                          switchMode();
-//                        }
-//                      });
-//                    } else {
-//                      switchMode();
-//                    }
-//                  } else {
-//                    switchMode();
-//                  }
-//                },
-//              ),
-//            ],
-//          ),
         ));
   }
 
-//  void switchMode() {
-//    EventUtil.onEvent(EventUtil.batchButtonClick);
-//    //并且删除images
-//    batchImagePaths.clear();
-//    this.setState(() {
-//      this.isBatch = !this.isBatch;
-//    });
-//    print("bathImagesSize=${batchImagePaths.length}");
-//  }
 
   Widget _buildBody() {
     return buildCameraView();

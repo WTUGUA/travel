@@ -51,8 +51,8 @@ class _LoginWithOutVipPageState extends State<LoginWithOutVipPage> {
               ),
             ),
             Positioned(
-              top: 100,
-              right: 245,
+              top: ScreenUtil.instance.setHeight(100),
+              right: ScreenUtil.instance.setWidth(245),
               child: Container(
                 height: ScreenUtil.instance.setHeight(186),
                 width: ScreenUtil.instance.setWidth(375),
@@ -60,8 +60,8 @@ class _LoginWithOutVipPageState extends State<LoginWithOutVipPage> {
               ),
             ),
             Positioned(
-              top: 100,
-              left: 100,
+              top: ScreenUtil.instance.setHeight(100),
+              left: ScreenUtil.instance.setWidth(110),
               child: Container(
                 height: ScreenUtil.instance.setHeight(186),
                 width: ScreenUtil.instance.setWidth(280),
@@ -103,8 +103,8 @@ class _LoginWithOutVipPageState extends State<LoginWithOutVipPage> {
               ),
             ),
             Positioned(
-              left: 15,
-              top: 70,
+              left: ScreenUtil.instance.setWidth(15),
+              top: ScreenUtil.instance.setHeight(70),
               child: Container(
                   height: ScreenUtil.instance.setHeight(90),
                   width: ScreenUtil.instance.setWidth(90),
@@ -115,7 +115,7 @@ class _LoginWithOutVipPageState extends State<LoginWithOutVipPage> {
                       child: Image(
                           width: ScreenUtil.instance.setWidth(80),
                           height: ScreenUtil.instance.setHeight(75),
-                          image: AssetImage("images/meizi.png"),
+                          image: AssetImage("images/mine_icon_head3.png"),
                           fit: BoxFit.cover),
                     ),
                   )),

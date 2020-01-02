@@ -137,15 +137,6 @@ class LeadVipDialog extends Dialog {
                                     ],
                                   ),
                                   TableRow(
-                                    children: <Widget>[
-                                      Text(''),
-                                      Container(
-                                        margin: EdgeInsets.all(PaddingContent),
-                                        child: Text('$batchNum次批量识字'),
-                                      ),
-                                    ],
-                                  ),
-                                  TableRow(
                                     decoration: BoxDecoration(
                                       border: Border(
                                         top: BorderSide(

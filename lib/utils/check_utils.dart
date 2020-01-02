@@ -5,31 +5,39 @@ import 'package:traveltranslation/ocr/util/free_try_utils.dart';
 import 'package:traveltranslation/ocr/util/navo_kv_utils.dart';
 import 'package:traveltranslation/ocr/util/shared_preference.dart';
 import 'package:traveltranslation/ocr/util/user_utils.dart';
-import 'package:traveltranslation/utils/travelsp.dart';
 
-class CheckServiceDelegate {
+class CheckOcrUtils {
   ///后台kv和判断取一样的字符串，避免混淆
   //图像识别
   static final String ocrNum = "ocr_num";
 
   //检查service是否可用
   static Future<bool> checkService(String type) async {
-//    return Future.value(true);
     //如果是非登录用户.则校验缓存记录文件
     if (UserDelegate.getUserState() == UserStatus.GUEST) {
-      //手动编写
-      var fileNum =
-      await OnlineConfigUtils.getInstance().getConfigParams(ocrNum);
-      int kvtime=int.parse(fileNum);
-      print("KV后台值:$kvtime");
-      int sptime=await TravelSP.getOcrTime();
-      print("SP值:$sptime");
-      if(sptime<=kvtime){
-        sptime=sptime+1;
-        TravelSP.saveOcrTime(sptime);
-        return true;
-      }else{
-        return false;
+      TryFreeEntity tryFreeEntity = TryUtils.tryFreeEntity;
+
+      if (tryFreeEntity == null) {
+        return Future.value(false);
+      }
+
+      if (type == ocrNum) {
+        //获取后台KV配置数据次数
+        var fileNum =
+        await OnlineConfigUtils.getInstance().getConfigParams(ocrNum);
+        print("ocrNum=$fileNum");
+        if(fileNum.isNotEmpty){
+          if (tryFreeEntity.ocrNum < int.parse(fileNum)) {
+            tryFreeEntity.ocrNum = tryFreeEntity.ocrNum + 1;
+            //更新次数
+            await TryUtils.writTryFileContent(tryFreeEntity);
+            return Future.value(true);
+          } else {
+            return Future.value(false);
+          }
+        }else{
+          return Future.value(false);
+        }
       }
     }
     //登录状态

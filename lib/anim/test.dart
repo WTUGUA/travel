@@ -145,14 +145,14 @@ class WaveLoadingPainter extends CustomPainter {
     _paint
       ..isAntiAlias = true
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
-      ..color =defaultColor;
+      ..strokeWidth = 1
+      ..color =AppColor.privacyColor;
     //_drawText(canvas: canvas, side: side, colors: backgroundColor);
 
 //    _circlePath.reset();
 //    _circlePath.addArc(Rect.fromLTWH(0, 0, side, side), 0, 2 * pi);
-    double waveWidth = side * 0.6;
-    double waveHeight = side / 9;
+    double waveWidth = side * 0.8;
+    double waveHeight = side / 15;
     _wavePath.reset();
     _wavePath.moveTo((animatedValue - 1) * waveWidth, radius);
     for (double i = -waveWidth; i < side; i += waveWidth) {
@@ -173,10 +173,10 @@ class WaveLoadingPainter extends CustomPainter {
     paint1
       ..isAntiAlias = true
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3
+      ..strokeWidth = 2
       ..color =AppColor.privacyColor;
-    double waveWidth1 = side * 0.4;
-    double waveHeight1 = side / 12;
+    double waveWidth1 = side * 0.6;
+    double waveHeight1 = side / 21;
     path.reset();
     path.moveTo((animatedValue - 1) *waveWidth1, radius);
     for (double i = -waveWidth1; i < side; i += waveWidth1) {

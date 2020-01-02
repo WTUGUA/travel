@@ -63,7 +63,7 @@ class OfflineDialog extends Dialog {
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 25, right: 25, top: 9),

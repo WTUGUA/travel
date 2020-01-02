@@ -68,8 +68,8 @@ class _TranslatePageState extends State<TranslatePage> {
 
     EventUtil.onEvent(EventUtil.transButtonClick);
     EventUtil.onEvent(EventUtil.transLanguageClick,label: value);
-    bool checkResult = await CheckServiceDelegate.checkService(
-        CheckServiceDelegate.translateNum);
+//    bool checkResult = await CheckServiceDelegate.checkService(
+//        CheckServiceDelegate.translateNum);
 //    if (checkResult) {
       var text = controller.text.toString();
       print(text.length);

@@ -109,9 +109,9 @@ class _ShowMultiPicturePageState extends State<ShowMultiPicturePage> with Automa
   //压缩图片再识别
   Future recognize() async {
     EventUtil.onEvent(EventUtil.aSureOcrClick);
-    bool checkResult =
-        await CheckServiceDelegate.checkService(CheckServiceDelegate.batchNum);
-    if (checkResult) {
+//    bool checkResult =
+//        await CheckServiceDelegate.checkService(CheckServiceDelegate.batchNum);
+//    if (checkResult) {
       Directory tempDir = await getTemporaryDirectory();
       tempPath = tempDir.path;
       if (pr == null) {
@@ -139,31 +139,31 @@ class _ShowMultiPicturePageState extends State<ShowMultiPicturePage> with Automa
       pr.hide();
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => OcrResultPage(images, buffer.toString())));
-    } else {
-      //引导用户登录
-      if (UserDelegate.getUserState() == UserStatus.GUEST) {
-        EventUtil.onEvent(EventUtil.aSurePopLoginPageView);
-        showDialog<Null>(
-            context: context, //BuildContext对象
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return new LeadLoginDialog();
-            });
-      } else if (UserDelegate.getUserState() == UserStatus.GENERAL) {
-        SpUtils.getUserMap().then((value) {
-          var ocrNum = value.analysis.ocrMaxNum;
-          var transNum = value.analysis.translateMaxNum;
-          var batchNum = value.analysis.batchMaxNum;
-          //提示用户升级未VIP
-          showDialog<Null>(
-              context: context, //BuildContext对象
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return new LeadVipDialog(ocrNum, transNum, batchNum);
-              });
-        });
-      }
-    }
+//    } else {
+//      //引导用户登录
+//      if (UserDelegate.getUserState() == UserStatus.GUEST) {
+//        EventUtil.onEvent(EventUtil.aSurePopLoginPageView);
+//        showDialog<Null>(
+//            context: context, //BuildContext对象
+//            barrierDismissible: false,
+//            builder: (BuildContext context) {
+//              return new LeadLoginDialog();
+//            });
+//      } else if (UserDelegate.getUserState() == UserStatus.GENERAL) {
+//        SpUtils.getUserMap().then((value) {
+//          var ocrNum = value.analysis.ocrMaxNum;
+//          var transNum = value.analysis.translateMaxNum;
+//          var batchNum = value.analysis.batchMaxNum;
+//          //提示用户升级未VIP
+//          showDialog<Null>(
+//              context: context, //BuildContext对象
+//              barrierDismissible: false,
+//              builder: (BuildContext context) {
+//                return new LeadVipDialog(ocrNum, transNum, batchNum);
+//              });
+//        });
+//      }
+//    }
   }
 
 

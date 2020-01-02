@@ -7,6 +7,7 @@ import 'package:traveltranslation/ocr/components/setting/widgets/loginwithvip_co
 import 'package:traveltranslation/ocr/util/navo_kv_utils.dart';
 import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/ocr/util/user_utils.dart';
+import 'package:traveltranslation/page/login/privacy.dart';
 import 'package:traveltranslation/page/login/splash.dart';
 import 'package:traveltranslation/utils/travelsp.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -23,28 +24,25 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
   String first=await TravelSP.getFromValue();
+  requestPermiss();
+  final router = Router();
+  Routes.configureRoutes(router);
+  Application.router = router;
+  UserDelegate.getUserInfo();
+  //初始化线上配置
+  OnlineConfigUtils.getInstance().init();
+  //初始化umeng
+  EventUtil.init();
   print(first);
   if(first==null){
+//    TravelSP.savePrivacy(false);
   TravelSP.saveFrom("简体中文");
   TravelSP.saveFromValue("zh");
   TravelSP.saveTo("英语");
   TravelSP.saveToValue("en");
-  requestPermiss();
   print("保存默认值");
-  final router = Router();
-  Routes.configureRoutes(router);
-  Application.router = router;
   runApp(MyApp());
   }else {
-    final router = Router();
-    Routes.configureRoutes(router);
-    Application.router = router;
-    requestPermiss();
-    UserDelegate.getUserInfo();
-    //初始化线上配置
-    OnlineConfigUtils.getInstance().init();
-    //初始化umeng
-    EventUtil.init();
     runApp(MyApp());
   }
 }
@@ -73,7 +71,8 @@ class MyApp extends StatelessWidget {
       ),
       home:
       //LoginComponent(),
-      Splash(),
+       Splash(),
+      // Privacy(),
     );
   }
 }

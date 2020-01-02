@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:traveltranslation/model/select.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
+import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/page/mainpage/find_page.dart';
 import 'package:traveltranslation/utils/event_bus.dart';
 import 'package:traveltranslation/utils/language.dart';
@@ -117,6 +118,7 @@ class _FromPageState extends State<FromPage> {
                           color: AppColor.privacyText1Color, fontSize: 16.0),
                       onTap: () {
                         //跳转到搜索界面
+                        EventUtil.onEvent(EventUtil.seek_langugeClick);
                         Navigator.of(context).pop();
                         Navigator.push(
                             context,
@@ -143,7 +145,7 @@ class _FromPageState extends State<FromPage> {
             height: ScreenUtil.instance.setHeight(15),
           ),
           Container(
-              padding: EdgeInsets.only(left: 15, top: 4, bottom: 3),
+              padding: EdgeInsets.only(left: ScreenUtil.instance.setWidth(15), top: ScreenUtil.instance.setHeight(4), bottom: ScreenUtil.instance.setHeight(3)),
               decoration: BoxDecoration(
                 color: AppColor.BGColor,
               ),
@@ -203,7 +205,7 @@ class _FromPageState extends State<FromPage> {
                                 offstage: showlog,
                                 child: Container(
                                     padding: EdgeInsets.only(
-                                        left: 15, top: 4, bottom: 3),
+                                        left: ScreenUtil.instance.setWidth(15), top: ScreenUtil.instance.setHeight(4), bottom: ScreenUtil.instance.setHeight(3)),
                                     decoration: BoxDecoration(
                                       color: AppColor.BGColor,
                                     ),

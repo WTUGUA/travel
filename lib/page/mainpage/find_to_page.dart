@@ -172,7 +172,7 @@ class _FindToPageState extends State<FindToPage> {
               child: Container(
                 height: ScreenUtil.instance.setHeight(54),
                 width: ScreenUtil.instance.setWidth(375),
-                padding: EdgeInsets.only(top: 15,left: 16),
+                padding: EdgeInsets.only(top: ScreenUtil.instance.setHeight(15),left: ScreenUtil.instance.setWidth(16)),
                 decoration: BoxDecoration(
                     color: AppColor.white,
                     border: Border(

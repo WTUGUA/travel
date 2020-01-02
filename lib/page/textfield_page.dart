@@ -52,7 +52,7 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
     });
     return Container(
         child: Card(
-      elevation: 3,
+      elevation: 0,
       margin: EdgeInsets.all(0.0),
       child: Container(
         height: ScreenUtil.instance.setHeight(208.0),
@@ -63,7 +63,7 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
               child: Container(
                 height: ScreenUtil.instance.setHeight(160.0),
                 padding: EdgeInsets.only(
-                    left: 15.0, right: 15.0, bottom: 15.0,),
+                    left: ScreenUtil.instance.setWidth(15.0), right: ScreenUtil.instance.setWidth(15.0), bottom: ScreenUtil.instance.setHeight(15.0),),
                 child: TextField(
                   focusNode: focusNode1,
                   controller: controller,
@@ -88,9 +88,6 @@ class _TextFieldDemoState extends State<TextFieldDemo> {
               ),
             ),
             IconDemo(),
-            Container(
-              height: ScreenUtil.instance.setHeight(15),
-            )
           ],
         ),
       ),

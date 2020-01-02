@@ -44,12 +44,12 @@ class _IndexBodyState extends State<IndexBody> {
           border: Border(
             bottom: BorderSide(
               width: ScreenUtil.instance.setWidth(0.5),
-              color: Colors.grey[500],
+              color: Colors.grey[200],
             ),
           )),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: Material(
@@ -62,7 +62,7 @@ class _IndexBodyState extends State<IndexBody> {
                       builder: (context) => new FromPage()));
                 },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       //获取sp的值
@@ -78,7 +78,7 @@ class _IndexBodyState extends State<IndexBody> {
             ),
           ),
           Container(
-            width:ScreenUtil.instance.setWidth(20),
+            width:ScreenUtil.instance.setWidth(10),
           ),
           Material(
             color: Colors.white,
@@ -98,7 +98,7 @@ class _IndexBodyState extends State<IndexBody> {
           ),
           ),
           Container(
-            width: ScreenUtil.instance.setWidth(20),
+            width: ScreenUtil.instance.setWidth(10),
           ),
           Expanded(
             child: Material(
@@ -110,7 +110,7 @@ class _IndexBodyState extends State<IndexBody> {
                       builder: (context) => new ToPage()));
                 },
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       this._sencondLanguage,

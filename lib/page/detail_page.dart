@@ -8,12 +8,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share/share.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:traveltranslation/db/database_history.dart';
+import 'package:traveltranslation/db/database_word.dart';
 import 'package:traveltranslation/model/history.dart';
 import 'package:traveltranslation/model/transresult.dart';
 import 'package:traveltranslation/model/word.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
 
 import 'package:flutter/material.dart';
+import 'package:traveltranslation/ocr/util/user_utils.dart';
+import 'package:traveltranslation/ocr/widget/dialog/lead_login_dialog.dart';
 import 'package:traveltranslation/page/mainpage/from_page.dart';
 import 'package:traveltranslation/page/mainpage/to_page.dart';
 import 'package:traveltranslation/page/toast.dart';
@@ -36,13 +39,14 @@ Color primaryColor = Colors.blue[600];
 
 class _DetailPageState extends State<DetailPage> {
   DatabaseHelper_history databaseHelper = DatabaseHelper_history();
-  static final String _appid = "20191128000361129";
-  static final String _securityKey = "vfgIbXmgf4cs1jP8lhrq";
+  DatabaseHelper_word databaseHelper_word = DatabaseHelper_word();
+  static final String _appid = "20190809000325332";
+  static final String _securityKey = "luTbBoWAQY3uGV8rtxog";
   String _firstLanguage = '英语';
   String _sencondLanguage = '中文';
-  String fromValue="";
-  String toValue="";
-  String url="";
+  String fromValue = "";
+  String toValue = "";
+  String url = "";
   static String text1 = "";
   static String ToText = "";
   FocusNode focusNode = new FocusNode();
@@ -51,20 +55,18 @@ class _DetailPageState extends State<DetailPage> {
   @override
   void initState() {
     getdata();
-    setState(() {
-    });
-
+    super.initState();
   }
+
   @override
   void dispose() {
     super.dispose();
     //友盟
-
   }
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width:375 , height: 667)..init(context);
+    ScreenUtil.instance = ScreenUtil(width: 375, height: 667)..init(context);
     return Container(
       child: Scaffold(
         body: Column(
@@ -80,7 +82,7 @@ class _DetailPageState extends State<DetailPage> {
                   border: Border(
                     bottom: BorderSide(
                       width: 0.5,
-                      color: Colors.grey[500],
+                      color: Colors.grey[200],
                     ),
                   )),
               child: Row(
@@ -102,8 +104,10 @@ class _DetailPageState extends State<DetailPage> {
                       child: InkWell(
                         onTap: () {
                           //跳转到源语言选择界面
-                          Navigator.push(context, new MaterialPageRoute(
-                              builder: (context) => new FromPage()));
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new FromPage()));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
@@ -150,8 +154,10 @@ class _DetailPageState extends State<DetailPage> {
                       child: InkWell(
                         onTap: () {
                           //跳转到目标语言选择界面
-                          Navigator.push(context, new MaterialPageRoute(
-                              builder: (context) => new ToPage()));
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new ToPage()));
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -176,13 +182,15 @@ class _DetailPageState extends State<DetailPage> {
             ),
             Container(
                 height: ScreenUtil.instance.setHeight(165),
-                padding: EdgeInsets.only(left: 15.0, top: 5.0),
+                padding: EdgeInsets.only(
+                    left: ScreenUtil.instance.setWidth(15.0),
+                    top: ScreenUtil.instance.setHeight(5.0)),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
                       bottom: BorderSide(
                         width: 0.5,
-                        color: Colors.grey[500],
+                        color: Colors.grey[200],
                       ),
                     )),
                 child: Row(
@@ -206,22 +214,50 @@ class _DetailPageState extends State<DetailPage> {
                           maxLines: 999,
                           cursorColor: Colors.blue[500],
                           cursorWidth: 2.0,
-                          onSubmitted: (text) async{
+                          onSubmitted: (text) async {
                             //再次调用文本翻译功能修改结果
-                            url=getTransResult(text,fromValue,toValue);
+                            text1 = text;
+                            //再次调用文本翻译功能修改结果
+                            int time1 = await TravelSP.getTRTime();
+                            url = getTransResult(text1, fromValue, toValue);
                             History history = await getresult(url);
-                            setState(() {
-                              ToText=history.hisTar;
-                            });
+                            if (UserDelegate.userStatus == UserStatus.GUEST &&
+                                time1 >= 15) {
+                              showDialog<Null>(
+                                  context: context, //BuildContext对象
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return new LeadLoginDialog();
+                                  }).then((value) {});
+                            } else {
+                              int time = time1 + 1;
+                              TravelSP.saveTRTime(time);
+                              setState(() {
+                                ToText = history.hisTar;
+                              });
+                            }
                           },
-                          onChanged: (value) async{
+                          onChanged: (value) async {
                             text1 = value;
                             //再次调用文本翻译功能修改结果
-                            url=getTransResult(text1,fromValue,toValue);
-                            History history = await getresult(url);
-                            setState(() {
-                              ToText=history.hisTar;
-                            });
+                            int time1 = await TravelSP.getTRTime();
+                            if (UserDelegate.userStatus == UserStatus.GUEST &&
+                                time1 >= 15) {
+                              showDialog<Null>(
+                                  context: context, //BuildContext对象
+                                  barrierDismissible: false,
+                                  builder: (BuildContext context) {
+                                    return new LeadLoginDialog();
+                                  }).then((value) {});
+                            } else {
+                              int time = time1 + 1;
+                              TravelSP.saveTRTime(time);
+                              url = getTransResult(text1, fromValue, toValue);
+                              History history = await getresult(url);
+                              setState(() {
+                                ToText = history.hisTar;
+                              });
+                            }
                           },
                           onTap: () {},
                         ),
@@ -240,13 +276,15 @@ class _DetailPageState extends State<DetailPage> {
                       )
                     ])),
             Container(
-                padding: EdgeInsets.only(left: 15.0, top: 5.0),
+                padding: EdgeInsets.only(
+                    left: ScreenUtil.instance.setWidth(15),
+                    top: ScreenUtil.instance.setHeight(5.0)),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
                       bottom: BorderSide(
                         width: 0.5,
-                        color: Colors.grey[500],
+                        color: Colors.grey[200],
                       ),
                     )),
                 height: ScreenUtil.instance.setHeight(145),
@@ -259,8 +297,7 @@ class _DetailPageState extends State<DetailPage> {
                           color: AppColor.privacyText1Color, fontSize: 20),
                     ))
                   ],
-                )
-                ),
+                )),
             Container(
               height: ScreenUtil.instance.setHeight(50),
               child: Row(
@@ -268,9 +305,19 @@ class _DetailPageState extends State<DetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
+                    onPressed: () {
+                      //是否加入收藏
+                      Word word=new Word(text1, ToText);
+                      databaseHelper_word.insertWord(word);
+                      Toast.toast(context,msg: "已添加到收藏",position: ToastPostion.bottom);
+                    },
+                    icon: Image.asset('images/translate_icon_save.png'),
+                    //iconSize: 10,
+                  ),
+                  IconButton(
                     // padding: EdgeInsets.only(left: 5.0),
                     onPressed: () {
-                      Share.share("原文："+text1+"  "+"译文："+ToText);
+                      Share.share("原文：" + text1 + "  " + "译文：" + ToText);
                     },
                     icon: Image(
                       image: AssetImage("images/translate_icon_share.png"),
@@ -280,8 +327,11 @@ class _DetailPageState extends State<DetailPage> {
                     // padding: EdgeInsets.only(left: 5.0),
                     onPressed: () {
                       //全屏按钮
-                      Navigator.push(context, new MaterialPageRoute(
-                          builder: (context) => new FullPage(text:ToText)));
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) =>
+                                  new FullPage(text: ToText)));
                     },
                     icon: Image(
                       image: AssetImage("images/translate_icon_full.png"),
@@ -293,7 +343,8 @@ class _DetailPageState extends State<DetailPage> {
                     onPressed: () {
                       //复制剪辑版
                       Clipboard.setData(new ClipboardData(text: ToText));
-                      Toast.toast(context,msg: "已复制到剪辑板",position: ToastPostion.bottom);
+                      Toast.toast(context,
+                          msg: "已复制到剪辑板", position: ToastPostion.bottom);
                     },
                     icon: Image(
                       image: AssetImage("images/translate_icon_copy.png"),
@@ -317,30 +368,30 @@ class _DetailPageState extends State<DetailPage> {
     setState(() {
       _firstLanguage = from;
       _sencondLanguage = to;
-      fromValue=fromvalue;
-      toValue=tovalue;
+      fromValue = fromvalue;
+      toValue = tovalue;
       text1 = widget.word.hisSource;
       ToText = widget.word.hisTar;
     });
   }
+
   String getTransResult(String query, String from, String to) {
     //拼接字符串appID+query+salt+securityKey
     String data = _appid + query + "1435660288" + _securityKey;
     String sign = generateMd5(data);
     //HTTP请求
-    var url =
-        'https://fanyi-api.baidu.com/api/trans/vip/translate' +
-            '?q=' +
-            query +
-            '&from=' +
-            from +
-            '&to=' +
-            to +
-            '&appid=' +
-            _appid +
-            '&salt=1435660288&sign=' +
-            sign +
-            '';
+    var url = 'https://fanyi-api.baidu.com/api/trans/vip/translate' +
+        '?q=' +
+        query +
+        '&from=' +
+        from +
+        '&to=' +
+        to +
+        '&appid=' +
+        _appid +
+        '&salt=1435660288&sign=' +
+        sign +
+        '';
     print(url);
     // getresult(url);
     return url;
@@ -355,17 +406,17 @@ class _DetailPageState extends State<DetailPage> {
       HttpClientResponse response = await request.close();
       var result = await response.transform(utf8.decoder).join();
       //将结果转义并存入数据库，可移除独立
-      if(result!=null) {
+      if (result != null) {
         print("文本翻译测试翻译结果：$result");
         Map<String, dynamic> map = json.decode(result);
         TransResult transResult = TransResult.fromJson(map);
-        print("文本翻译测试翻译结果："+transResult.word[0].targetWord);
+        print("文本翻译测试翻译结果：" + transResult.word[0].targetWord);
         History word = new History(
             transResult.word[0].sourceWord, transResult.word[0].targetWord, 0);
         databaseHelper.insertHistory(word);
         httpClient.close();
         return word;
-      }else{
+      } else {
         print("result等于null");
         httpClient.close();
         return null;
@@ -374,5 +425,4 @@ class _DetailPageState extends State<DetailPage> {
       print("请求失败:$e");
     } finally {}
   }
-
 }

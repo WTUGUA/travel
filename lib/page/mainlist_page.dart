@@ -20,15 +20,16 @@ class _MainListState extends State<MainList> {
     ScreenUtil.instance = ScreenUtil(width:375 , height: 667)..init(context);
     // TODO: implement build
     return Container(
+      color: Colors.white,
         height: ScreenUtil.instance.setHeight(341),
         child: Column(
           children: <Widget>[
             Container(
                 height: ScreenUtil.instance.setHeight(40),
                 padding: EdgeInsets.only(
-                  left: 15.0,
-                  right: 15.0,
-                  top: 10.0,
+                  left: ScreenUtil.instance.setWidth(15.0),
+                  right: ScreenUtil.instance.setWidth(15.0),
+                  top: ScreenUtil.instance.setHeight(10.0),
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white,

@@ -2,21 +2,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:traveltranslation/model/select.dart';
 
 class TravelSP{
-  static const String KEY_Privacy = "key_package_name";
+  static const String KEY_Privacy = "key_Privacy";
   static const String KEY_From = "key_From";
   static const String KEY_To = "key_To";
   static const String KEY_From_Value = "key_From_Value";
   static const String KEY_To_Value = "key_To_Value";
-  ///保存用户token
+  static const String KEY_Ocr_Time = "key_Ocr_Time";
+  static const String KEY_Time="Key_Time";
+  static const String KEY_TR_Time="Key_Tr_Time";
+  ///保存隐私弹窗
   static Future<bool> savePrivacy(bool token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setBool(KEY_Privacy, token);
   }
 
-  ///获取用户token
+  ///保存隐私弹窗
   static Future<bool> getPrivacy() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(KEY_Privacy);
+    bool privacy=prefs.getBool(KEY_Privacy);
+    if(privacy==null){
+      return false;
+    }else{
+      return privacy;
+    }
   }
   ///保存的源语言值
   static Future<bool> saveFrom(String from) async {
@@ -61,5 +69,56 @@ class TravelSP{
   static Future<String> getToValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(KEY_To_Value);
+  }
+  ///保存的尝试次数
+  static Future<bool> saveOcrTime(int ocrtime) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setInt(KEY_Ocr_Time, ocrtime);
+  }
+
+  ///获取保存的尝试次数
+  static Future<int> getOcrTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int ocrtime=prefs.getInt(KEY_Ocr_Time);
+    if(ocrtime==null){
+      return 0;
+    }else{
+      return ocrtime;
+    }
+  }
+  ///保存时间
+  static Future<bool> saveTime(String to) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString(KEY_Time, to);
+
+  }
+
+  ///获取保存的时间
+  static Future<String> getTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String time=prefs.getString(KEY_Time);
+    if(time==null){
+      print("time=$time");
+      return null;
+    }else {
+      return prefs.getString(KEY_Time);
+    }
+  }
+  ///保存时间
+  static Future<bool> saveTRTime(int to) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setInt(KEY_TR_Time, to);
+
+  }
+
+  ///获取保存的时间
+  static Future<int> getTRTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int time=prefs.getInt(KEY_TR_Time);
+    if(time==null){
+      return 0;
+    }else {
+      return prefs.getInt(KEY_TR_Time);
+    }
   }
 }

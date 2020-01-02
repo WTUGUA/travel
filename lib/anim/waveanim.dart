@@ -21,11 +21,11 @@ class WaveProgressBar extends StatefulWidget{
 
   WaveProgressBar({
     @required this.size,
-    this.waveHeight : 25.0,
+    this.waveHeight : 15.0,
     @required this.percentage,
     @required this.textStyle,
-    this.waveDistance : 30.0,
-    this.flowSpeed : 1.5,
+    this.waveDistance : 10.0,
+    this.flowSpeed : 1.0,
     this.waterColor : const Color(0xffe16009),
     this.strokeCircleColor : const Color(0xFFE0E0E0),
     this.circleStrokeWidth : 4.0,

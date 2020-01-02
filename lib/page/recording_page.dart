@@ -72,7 +72,8 @@ class RecordingPageState extends State<RecordingPage> {
         ],
       ),
     ):Expanded(
-      child: ListView.builder(
+      child:
+      ListView.builder(
         padding: EdgeInsets.zero,
         itemCount: count,
         itemBuilder: (context, index) {
@@ -100,7 +101,7 @@ class RecordingPageState extends State<RecordingPage> {
   void _delete(BuildContext context, History history) async {
     int result = await databaseHelper.deleteHistory(history.id);
     if (result != 0) {
-      _showSnackBar(context, 'History Deleted Successfully');
+      _showSnackBar(context, '翻译历史删除成功');
       updateListView();
     }
   }

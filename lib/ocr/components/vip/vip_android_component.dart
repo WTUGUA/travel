@@ -46,14 +46,9 @@ class _VipAndroidComponentState extends State<VipAndroidComponent> {
         .getConfigParams(OnlineConfigUtils.batchPerNum);
 
     normalUser.add("每天${userEntityInfo.analysis.ocrMaxNum}次拍照翻译");
-  //  normalUser.add("每天${userEntityInfo.analysis.batchMaxNum}次批量处理");
-
- //   normalUser.add("每次不超过$batchMax张");
     normalUser.add("精准翻译每天${userEntityInfo.analysis.translateMaxNum}次");
 
     vipUser.add("不限制");
-  //  vipUser.add("不限制");
-  //  vipUser.add("不限制");
     vipUser.add("不限制");
 
     setState(() {});

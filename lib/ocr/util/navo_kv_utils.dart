@@ -41,7 +41,7 @@ class OnlineConfigUtils {
     }
     return Future.value("");
   }
-
+//需要修改
   //初始化请求参数
   Future<bool> init() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

@@ -4,6 +4,7 @@ import 'package:traveltranslation/db/database_word.dart';
 import 'package:traveltranslation/model/history.dart';
 import 'package:traveltranslation/model/word.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
+import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/page/detail_page.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sqflite/sqflite.dart';
@@ -24,6 +25,12 @@ class SavePageState extends State<SavePage> {
   @override
   void initState() {
     updateListView();
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -126,7 +133,7 @@ class SavePageState extends State<SavePage> {
               child: Container(
                   height: ScreenUtil.instance.setHeight(90.0),
                   color: AppColor.white,
-                  padding: EdgeInsets.only(left: 15.0, top: 15.0, bottom: 15.0),
+                  padding: EdgeInsets.only(left: ScreenUtil.instance.setWidth(15.0), top: ScreenUtil.instance.setHeight(15.0), bottom: ScreenUtil.instance.setHeight(15.0)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
@@ -201,7 +208,7 @@ class SavePageState extends State<SavePage> {
   void _delete(BuildContext context, Word Word) async {
     int result = await databaseHelper.deleteWord(Word.id);
     if (result != 0) {
-      _showSnackBar(context, 'Word Deleted Successfully');
+      _showSnackBar(context, '收藏删除成功');
       updateListView();
     }
   }

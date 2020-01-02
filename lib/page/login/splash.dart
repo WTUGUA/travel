@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-//import 'package:flutter_ads/ads_splashview.dart';
+import 'package:flutter_ads/ads_splashview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:traveltranslation/ocr/config/application.dart';
+import 'package:traveltranslation/page/login/privacy.dart';
+import 'package:traveltranslation/utils/travelsp.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -9,6 +11,27 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  bool sp = false;
+
+  @override
+  void initState() {
+    getPrivacy();
+    super.initState();
+  }
+
+  void getPrivacy() async {
+    bool privacy = await TravelSP.getPrivacy();
+    if (privacy == false) {
+      setState(() {
+        sp = false;
+      });
+    } else {
+      setState(() {
+        sp = true;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: 375, height: 667)..init(context);
@@ -20,14 +43,26 @@ class _SplashState extends State<Splash> {
           //广告容器
           height: ScreenUtil.instance.setHeight(567),
           color: Colors.grey,
-//          child:  AdsSplashView(
-//            asdIsFinish: () {
-//              Application.router.navigateTo(context, "/mainview", clearStack: true);
-//            },
-//          ),
+          child: AdsSplashView(
+            //appid:"com.appvvv.ocr",
+            //IOS端需要配置广告ID android端不需要
+            asdIsFinish: () {
+              //  跳转到隐私或者主界面
+              if (sp) {
+                Application.router
+                    .navigateTo(context, "/mainview", clearStack: true);
+              } else {
+                Navigator.push(context,
+                    new MaterialPageRoute(builder: (context) => new Privacy()));
+              }
+            },
+          ),
         ),
         Container(
-          padding: EdgeInsets.only(top: 20, left: 110, right: 81),
+          padding: EdgeInsets.only(
+              top: ScreenUtil.instance.setHeight(20),
+              left: ScreenUtil.instance.setWidth(110),
+              right: ScreenUtil.instance.setWidth(81)),
           child: Row(
             //ICon和APPname
             mainAxisAlignment: MainAxisAlignment.center,
@@ -35,17 +70,15 @@ class _SplashState extends State<Splash> {
               Container(
                 height: ScreenUtil.instance.setHeight(60),
                 width: ScreenUtil.instance.setWidth(60),
-                  child:ClipRRect(
-                    borderRadius: BorderRadius.circular(14.0),
-                    child: Image(
-                        width: ScreenUtil.instance.setWidth(60),
-                        height: ScreenUtil.instance.setHeight(60),
-                        image: AssetImage("images/meizi.png"),
-                        fit: BoxFit.cover),
-                  )
+                child: Image(
+                    width: ScreenUtil.instance.setWidth(60),
+                    height: ScreenUtil.instance.setHeight(60),
+                    image: AssetImage("images/splash_logo.png"),
+                    ),
               ),
               Container(
-                padding: EdgeInsets.only(left: 15),
+                padding:
+                    EdgeInsets.only(left: ScreenUtil.instance.setWidth(15)),
                 child: Text(
                   '旅游翻译软件',
                   style: TextStyle(fontSize: 16, color: Colors.black),

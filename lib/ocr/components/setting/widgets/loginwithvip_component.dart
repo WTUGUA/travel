@@ -57,8 +57,8 @@ class _LoginWithVipPageState extends State<LoginWithVipPage> {
               ),
             ),
             Positioned(
-              top: 100,
-              right: 245,
+              top: ScreenUtil.instance.setHeight(100),
+              right:  ScreenUtil.instance.setWidth(245),
               child: Container(
                 height: ScreenUtil.instance.setHeight(186),
                 width: ScreenUtil.instance.setWidth(375),
@@ -66,8 +66,8 @@ class _LoginWithVipPageState extends State<LoginWithVipPage> {
               ),
             ),
             Positioned(
-              top: 100,
-              left: 100,
+              top: ScreenUtil.instance.setHeight(100),
+              left: ScreenUtil.instance.setWidth(110),
               child: Container(
                 height: ScreenUtil.instance.setHeight(186),
                 width: ScreenUtil.instance.setWidth(280),
@@ -84,32 +84,38 @@ class _LoginWithVipPageState extends State<LoginWithVipPage> {
                       style:
                       TextStyle(color: AppColor.privacyText1Color, fontSize: 18.0),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Image(
-                          image: AssetImage("images/mine_icon_vip.png"),
-                        ),
-                        Text(
-                            userEntityInfo == null||userEntityInfo.viptime==null
-                                ? ""
-                                : TimeUtils.transUnixTime(
-                                userEntityInfo.viptime.toInt()),
-                            style: TextStyle(fontSize: 13.0, color: AppColor.privacyTextColor)),
-                        Text(
-                          "到期",
-                          style: TextStyle(
-                              fontSize: 13, color: AppColor.privacyTextColor),
-                        ),
-                      ],
+                    GestureDetector(
+                      onTap: (){
+
+                        
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Image(
+                            image: AssetImage("images/mine_icon_vip.png"),
+                          ),
+                          Text(
+                              userEntityInfo == null||userEntityInfo.viptime==null
+                                  ? ""
+                                  : TimeUtils.transUnixTime(
+                                  userEntityInfo.viptime.toInt()),
+                              style: TextStyle(fontSize: 13.0, color: AppColor.privacyTextColor)),
+                          Text(
+                            "到期",
+                            style: TextStyle(
+                                fontSize: 13, color: AppColor.privacyTextColor),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Positioned(
-              left: 15,
-              top: 70,
+              left: ScreenUtil.instance.setWidth(15),
+              top: ScreenUtil.instance.setHeight(70),
               child: Container(
                   height: ScreenUtil.instance.setHeight(90),
                   width: ScreenUtil.instance.setWidth(90),
@@ -120,7 +126,7 @@ class _LoginWithVipPageState extends State<LoginWithVipPage> {
                       child: Image(
                           width: ScreenUtil.instance.setWidth(80),
                           height: ScreenUtil.instance.setHeight(75),
-                          image: AssetImage("images/meizi.png"),
+                          image: AssetImage("images/mine_icon_head1.png"),
                           fit: BoxFit.cover),
                     ),
                   )),

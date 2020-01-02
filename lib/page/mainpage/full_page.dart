@@ -35,13 +35,18 @@ class _FullPageState extends State<FullPage> {
                     width:ScreenUtil.instance.setWidth(650),
                     height: ScreenUtil.instance.setHeight(375),
                     child:FittedBox(
-                        fit: BoxFit.contain,
+                        fit: BoxFit.fill,
                         //  alignment: Alignment.centerRight,
-                        child: SizedBox(
-                          child: AutoSizeText(
-                            widget.text,
-                            minFontSize: 40,
-                            textAlign:TextAlign.center,
+                        child: Container(
+                          height:200,
+                          width:300,
+                          child:Center(
+                            child:
+                            AutoSizeText(
+                              widget.text,
+                              minFontSize: 40,
+                              textAlign:TextAlign.center,
+                            ),
                           ),
                         )
                     )

@@ -59,7 +59,7 @@ dependencies:
   fluro: ^1.5.1
   fluwx: ^1.0.4
   tobias: ^1.1.0+1
-#  flutter_ads: ^0.1.1
+  flutter_ads: ^0.1.1
   nova_utils: ^0.0.3
   flutter_localizations:
     sdk: flutter

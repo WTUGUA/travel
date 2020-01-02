@@ -2,8 +2,8 @@ import 'package:traveltranslation/db/database_history.dart';
 import 'package:traveltranslation/ocr/components/setting/setting_component.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
 import 'package:flutter/material.dart';
+import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/page/mainpage/save_page.dart';
-import 'package:traveltranslation/page/mainpage/user_page.dart';
 import 'package:traveltranslation/page/toast.dart';
 
 import '../index_page.dart';
@@ -79,6 +79,12 @@ class _MainPageState extends State<MainPage> {
   }
   void _onItemTapped(int index) {
     setState(() {
+      if(index==1){
+        EventUtil.onEvent(EventUtil.tetionClick);
+      }
+      if(index==2){
+        EventUtil.onEvent(EventUtil.my_indexClick);
+      }
       _selectedIndex = index;
     });
   }

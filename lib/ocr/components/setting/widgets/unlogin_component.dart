@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:traveltranslation/db/database_history.dart';
@@ -20,10 +22,16 @@ class UnLoginPage extends StatefulWidget {
 
 class _UnLoginPageState extends State<UnLoginPage> {
   static DatabaseHelper_history databaseHelper = DatabaseHelper_history();
+  bool ShowBuyVip=true;
   @override
   void initState() {
     super.initState();
     verifyUser();
+    if (Platform.isIOS) {
+      setState(() {
+        ShowBuyVip=false;
+      });
+    }
   }
 
   Future verifyUser() async {
@@ -56,8 +64,8 @@ class _UnLoginPageState extends State<UnLoginPage> {
               ),
             ),
             Positioned(
-              top: 100,
-              right: 245,
+              top: ScreenUtil.instance.setHeight(100),
+              right: ScreenUtil.instance.setWidth(245),
               child: Container(
                 height: ScreenUtil.instance.setHeight(186),
                 width: ScreenUtil.instance.setWidth(375),
@@ -65,15 +73,15 @@ class _UnLoginPageState extends State<UnLoginPage> {
               ),
             ),
             Positioned(
-              top: 100,
-              left: 100,
+              top: ScreenUtil.instance.setHeight(100),
+              left:ScreenUtil.instance.setWidth(110),
               child: Container(
                 height: ScreenUtil.instance.setHeight(95),
                 width: ScreenUtil.instance.setWidth(280),
                 color: AppColor.white,
                 child: GestureDetector(
                   onTap: (){
-                    //跳转到登录界面
+                    //跳转到登录界面 IOS添加游客购买功能
                     Navigator.of(context)
                         .push(MaterialPageRoute(builder: (context) => LoginComponent()))
                         .then((value) {
@@ -104,6 +112,25 @@ class _UnLoginPageState extends State<UnLoginPage> {
                               style: TextStyle(
                                   fontSize: 13, color: AppColor.privacyTextColor))
                         ],
+                      ),
+                      Offstage(
+                        offstage:  ShowBuyVip,
+                        child:GestureDetector(
+                          onTap: (){
+                            Application.router.navigateTo(context, "/vip").then((value) {
+                              if (UserDelegate.userStatus == UserStatus.VIP) {
+                                BlocProvider.of<LoginBloc>(context)
+                                    .dispatch(new LoginVipEvent());
+                              } else {
+                                BlocProvider.of<LoginBloc>(context)
+                                    .dispatch(new LoginActionEvent());
+                              }
+                            });
+                          },
+                          child:Text('游客状态购买VIP',
+                              style: TextStyle(
+                                  fontSize: 13, color: AppColor.privacyTextColor)),
+                        ),
                       )
                     ],
                   ),
@@ -111,8 +138,8 @@ class _UnLoginPageState extends State<UnLoginPage> {
               ),
             ),
             Positioned(
-              left: 15,
-              top: 70,
+              left: ScreenUtil.instance.setWidth(15),
+              top: ScreenUtil.instance.setHeight(70),
               child: Container(
                   height: ScreenUtil.instance.setHeight(90),
                   width: ScreenUtil.instance.setWidth(90),
@@ -123,7 +150,7 @@ class _UnLoginPageState extends State<UnLoginPage> {
                       child: Image(
                           width: ScreenUtil.instance.setWidth(80),
                           height: ScreenUtil.instance.setHeight(75),
-                          image: AssetImage("images/meizi.png"),
+                          image: AssetImage("images/mine_icon_head.png"),
                           fit: BoxFit.cover),
                     ),
                   )),

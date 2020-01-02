@@ -93,12 +93,17 @@ class _DialogueState extends State<Dialogue> {
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
             Container(
-              color: AppColor.dialogueColor,
+        decoration: BoxDecoration(
+            color:  AppColor.dialogueColor,
+            border: Border(bottom: BorderSide(color: AppColor.dialogueColor,width: 0.0)),
+//    gradient: LinearGradient(
+//    color: AppColor.dialogueColor)
+        ),
               child:Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
-                      padding: EdgeInsets.only(top: 30.0),
+                      padding: EdgeInsets.only(top: ScreenUtil.instance.setHeight(30.0)),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -108,7 +113,7 @@ class _DialogueState extends State<Dialogue> {
                       )
                   ),
                   IconButton(
-                      padding: EdgeInsets.only(right: 5.0,top: 30.0),
+                      padding: EdgeInsets.only(right: ScreenUtil.instance.setWidth(5.0),top: ScreenUtil.instance.setHeight(30.0)),
                       onPressed: () {
                         if (reversal == 0) {
                           setState(() {
@@ -142,7 +147,8 @@ class _DialogueState extends State<Dialogue> {
                   Container(
                     color: AppColor.dialogueColor,
                       height: ScreenUtil.instance.setHeight(textheight),
-                      padding: EdgeInsets.only(left: 15.0, top: 5.0),
+                      padding: EdgeInsets.only(left: ScreenUtil.instance.setWidth(15.0), top: ScreenUtil.instance.setHeight(5.0)),
+
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,9 +160,11 @@ class _DialogueState extends State<Dialogue> {
                                 textInputAction: TextInputAction.done,
                                 decoration: InputDecoration(
                                     border: InputBorder.none,
-                                    hintText: TextTo),
+                                    hintText: TextTo,
+                                hintStyle:TextStyle(
+                                    color: AppColor.LoginTextColor, fontSize: 20.0) ),
                                 style: TextStyle(
-                                    color: AppColor.LoginTextColor, fontSize: 25.0),
+                                    color: AppColor.LoginTextColor, fontSize: 20.0),
                                 maxLines: 999,
                                 cursorColor: Colors.blue[500],
                                 cursorWidth: 2.0,
@@ -174,12 +182,12 @@ class _DialogueState extends State<Dialogue> {
               ),
             ),
             //贝塞尔曲线动画
-            RotatedBox(
+          RotatedBox(
            quarterTurns: 2,
            child: Container(
               height: ScreenUtil.instance.setHeight(60),
               color: AppColor.white,
-             padding: EdgeInsets.only(top: 20),
+             padding: EdgeInsets.only(top: ScreenUtil.instance.setHeight(20)),
               child:WaveProgressBar(
                 flowSpeed: 0.5,
                 waveDistance:45.0,
@@ -194,7 +202,7 @@ class _DialogueState extends State<Dialogue> {
             ),
             Container(
                 height: ScreenUtil.instance.setHeight(220),
-                padding: EdgeInsets.only(left: 15.0, top: 5.0),
+                padding: EdgeInsets.only(left: ScreenUtil.instance.setWidth(15.0), top: ScreenUtil.instance.setHeight(5.0)),
                 color: AppColor.white,
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -206,7 +214,9 @@ class _DialogueState extends State<Dialogue> {
                           controller: Zhcontroller,
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
-                              border: InputBorder.none, hintText: TextFrom),
+                              border: InputBorder.none, hintText: TextFrom,
+                            hintStyle: TextStyle(color: AppColor.privacyText1Color, fontSize: 18.0),
+                          ),
                           style: TextStyle(color: AppColor.privacyText1Color, fontSize: 18.0),
                           maxLines: 999,
                           cursorColor: Colors.blue[500],
@@ -234,15 +244,14 @@ class _DialogueState extends State<Dialogue> {
                         ),
                       )
                     ])),
-
             Expanded(
                 child: Container(
                     color: AppColor.white,
-                  padding: EdgeInsets.only(top: 5),
+                  padding: EdgeInsets.only(top: ScreenUtil.instance.setHeight(5)),
                     child: Stack(children: <Widget>[
                       Positioned(
-                        top: 20,
-                        left: 30,
+                        top: ScreenUtil.instance.setHeight(20),
+                        left: ScreenUtil.instance.setWidth(30),
                         child: Container(
                           height: ScreenUtil.instance.setHeight(44),
                           width: ScreenUtil.instance.setWidth(134),
@@ -280,8 +289,8 @@ class _DialogueState extends State<Dialogue> {
                         ),
                       ),
                       Positioned(
-                        right: 30,
-                        top: 20,
+                        right: ScreenUtil.instance.setWidth(30),
+                        top: ScreenUtil.instance.setHeight(20),
                         child: Container(
                           height: ScreenUtil.instance.setHeight(44),
                           width: ScreenUtil.instance.setWidth(134),
@@ -315,8 +324,8 @@ class _DialogueState extends State<Dialogue> {
                         ),
                       ),
                       Positioned(
-                        right: 145,
-                        left: 145,
+                        right: ScreenUtil.instance.setWidth(145),
+                        left: ScreenUtil.instance.setWidth(145),
                         child: Container(
                             height: ScreenUtil.instance.setHeight(80),
                             width: ScreenUtil.instance.setWidth(80),

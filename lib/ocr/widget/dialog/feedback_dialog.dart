@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
 import 'package:traveltranslation/ocr/config/application.dart';
 import 'package:traveltranslation/ocr/config/routes.dart';
 import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
+import 'package:traveltranslation/page/toast.dart';
 
-class LeadLoginDialog extends Dialog {
-
+class FeedbackDialog extends Dialog {
   @override
   Widget build(BuildContext context) {
     return new Material(
@@ -14,11 +15,11 @@ class LeadLoginDialog extends Dialog {
       child: new Center(
         //保证控件居中效果
         child: new SizedBox(
-          width: 284.0,
-          height: 290.0,
+          width: 240.0,
+          height: 250.0,
           child: new Container(
             decoration: ShapeDecoration(
-              color: Colors.white,
+              color: AppColor.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(8.0),
@@ -38,12 +39,14 @@ class LeadLoginDialog extends Dialog {
                       width: 22,
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Image.asset(
-                        "images/icon_pic_login.png",
-                        height: 84,
-                        width: 99,
-                      ),
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        '反馈意见',
+                        style: TextStyle(
+                          color: AppColor.darkGray,
+                          fontSize: 20,
+                        ),
+                      )
                     ),
                     InkWell(
                       onTap: () {
@@ -60,6 +63,9 @@ class LeadLoginDialog extends Dialog {
                     )
                   ],
                 ),
+                Container(
+                  height: 20,
+                ),
                 Center(
                   child: Column(
                     children: <Widget>[
@@ -67,16 +73,19 @@ class LeadLoginDialog extends Dialog {
                         height: 10,
                       ),
                       Text(
-                        "登录领取更多权益",
+                        "请添加我们的在线客服：",
                         style: TextStyle(
                             color: AppColor.darkGray,
                             fontSize: 16,
                             fontWeight: FontWeight.bold),
                       ),
                       Container(
+                        height: 20,
+                      ),
+                      Container(
                         margin: EdgeInsets.only(left: 25, right: 25, top: 9),
                         child: Text(
-                          "登录用户可领取更多拍照翻译次数和权益等着你哦~",
+                          "QQ:3607799199",
                           style: TextStyle(
                             color: AppColor.darkGray,
                             fontSize: 14,
@@ -84,38 +93,24 @@ class LeadLoginDialog extends Dialog {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(left: 25, right: 25),
-                        child: Text(
-                          "(提示：登录账号有助于在更换设备、或者更换其他操作系统设备时，同步您的购买状态)",
-                          style: TextStyle(
-                            color: Color(0xff7A7A7A),
-                            fontSize: 12,
-                          ),
-                        ),
+                        height: 30,
                       ),
-                      InkWell(
-                        onTap: () {
-                          EventUtil.onEvent(EventUtil.aSurePopLoginClick);
-                          Application.router
-                              .navigateTo(context, Routes.settingLogin)
-                              .then((value) {
-                            Navigator.of(context).pop();
-                          });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 15.0, top: 20.0),
-                          padding: EdgeInsets.only(
-                              left: 18.0, right: 18.0, top: 5.0, bottom: 5.0),
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                  colors: AppColor.buttonGradient,
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter),
-                              borderRadius: BorderRadius.circular(16)),
-                          child: Text(
-                            "登录",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
-                          ),
+                      Container(
+                        width: 180,
+                        height: 74,
+                        padding: EdgeInsets.only(bottom: 34),
+                        child: FlatButton(
+                          onPressed: (){
+                            Clipboard.setData(new ClipboardData(text: "3607799199"));
+                            Toast.toast(context,msg: "已复制到剪辑板",position: ToastPostion.bottom);
+                          },
+                          child: Text('复制QQ号',
+                              style: TextStyle(color: AppColor.white, fontSize: 16)),
+                          color: AppColor.privacyColor,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(25),
+                              )),
                         ),
                       )
                     ],

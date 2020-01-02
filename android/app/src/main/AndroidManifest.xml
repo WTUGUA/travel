@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.appvvv.ocr">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tuolu.translation">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -17,9 +18,10 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="旅游翻译软件"
-        android:icon="@mipmap/ic_launcher">
+        tools:replace="android:label"
+        android:icon="@mipmap/logo">
         <activity
-            android:name=".MainActivity"
+            android:name="com.tuolu.translation.MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

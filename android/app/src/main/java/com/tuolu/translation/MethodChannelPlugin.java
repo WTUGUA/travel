@@ -1,4 +1,4 @@
-package com.appvvv.ocr;
+package com.tuolu.translation;
 
 import android.app.Activity;
 import android.widget.Toast;
@@ -41,14 +41,7 @@ public class MethodChannelPlugin implements MethodChannel.MethodCallHandler {
                 //给flutter端的返回值
                 result.success("MethodChannelPlugin收到：" + methodCall.arguments);
                 Toast.makeText(activity, methodCall.arguments + "", Toast.LENGTH_SHORT).show();
-//                if (activity instanceof FlutterAppActivity) {
-//                    ((FlutterAppActivity) activity).showContent(methodCall.arguments);
-//                }
                 break;
-//            case "sendToArs":
-//                result.success("MethodChannelPlugin收到：" + methodCall.arguments);
-//               // Toast.makeText(activity, methodCall.arguments + "", Toast.LENGTH_SHORT).show();
-//                break;
             default:
                 result.notImplemented();
                 break;

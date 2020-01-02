@@ -23,11 +23,14 @@ class TryUtils {
     await initTryFileName();
     File file = new File(filename);
     var exist = await file.exists();
+    print("测试exist："+exist.toString());
     var hasInitFile = await SpUtils.getHasInitTryFile();
+    print("测试sp值hasInitFile："+hasInitFile.toString());
     if (!exist && !hasInitFile) {
       //初始化授权文件次数
       file.createSync();
       //默认使用了0次
+      //应用新建初始化
       tryFreeEntity = new TryFreeEntity(batchNum: 0, ocrNum: 0, translateNum: 0);
       var encode = json.encode(tryFreeEntity);
       await file.writeAsString(encode);
@@ -37,7 +40,7 @@ class TryUtils {
       tryFreeEntity = await _getTryFileContent();
     }
   }
-
+//根据用户ID存储试用数据到本地
   static Future initTryFileName() async {
     var uuid = await DeviceId.getID;
     if (Platform.isAndroid) {
@@ -89,6 +92,7 @@ class TryUtils {
   static Future<void> initIOS() async {
     //默认使用了0次
     List<String> paramName = ["batchNum", "ocrNum", "translateNum"];
+    //获取IOS设置钥匙链的值
     Map<String, String> data = await NovaUtils.getKeyChainValue(paramName);
     if(data!=null){
       //如果返回key，则视作保存过,否则保存init次数

@@ -41,8 +41,8 @@ class CurvePainter extends CustomPainter {
     _circlePath.reset();
     _circlePath.addArc(Rect.fromLTWH(0, 0, side, side), 0, 2 * pi);
 
-    double waveWidth = side * 0.8;
-    double waveHeight = side / 6;
+    double waveWidth = side * 0.9;
+    double waveHeight = side / 50;
     _wavePath.reset();
     _wavePath.moveTo(-waveWidth, radius);
     for (double i = -waveWidth; i < side; i += waveWidth) {
@@ -62,15 +62,15 @@ class CurvePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3
       ..color =AppColor.privacyColor;
-    double waveWidth1 = side * 0.4;
-    double waveHeight1 = side / 12;
+    double waveWidth1 = side * 20;
+    double waveHeight1 = side / 100;
     path.reset();
     path.moveTo(-waveWidth1, radius);
     for (double i = -waveWidth1; i < side; i += waveWidth1) {
       path.relativeQuadraticBezierTo(
-          waveWidth1 / 4, -waveHeight1, waveWidth1 / 2, 0);
+          waveWidth1 / 8, -waveHeight1, waveWidth1 / 4, 0);
       path.relativeQuadraticBezierTo(
-          waveWidth1 / 4, waveHeight1, waveWidth1 / 2, 0);
+          waveWidth1 / 16, waveHeight1, waveWidth1 / 2, 0);
     }
     //为了方便读者理解，这里把路径绘制出来，实际上不需要
     canvas.drawPath(path, paint1);

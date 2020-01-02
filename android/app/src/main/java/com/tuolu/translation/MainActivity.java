@@ -1,4 +1,4 @@
-package com.appvvv.ocr;
+package com.tuolu.translation;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,27 +8,27 @@ import io.flutter.plugins.GeneratedPluginRegistrant;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import com.baidu.translate.asr.OnRecognizeListener;
 import com.baidu.translate.asr.TransAsrClient;
 import com.baidu.translate.asr.TransAsrConfig;
 import com.baidu.translate.asr.data.RecognitionResult;
+import com.umeng.analytics.MobclickAgent;
+
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends FlutterActivity {
   private static final String CHANNEL ="samples.flutter.io/asr";
   private static final String TAG = "MainActivity";
-  private static final String APP_ID = "20191128000361129";
-  private static final String SECRET_KEY = "vfgIbXmgf4cs1jP8lhrq";
+  private static final String APP_ID = "20190809000325332";
+  private static final String SECRET_KEY = "luTbBoWAQY3uGV8rtxog";
   String to="";
   String from;
   String resultFrom="";
@@ -59,13 +59,13 @@ public class MainActivity extends FlutterActivity {
                 }
                 // Toast.makeText(MainActivity.this,from.toString(),Toast.LENGTH_SHORT).show();
                 if (call.method.equals("start")) {
-                  Toast.makeText(MainActivity.this,"对话识别开始",Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(MainActivity.this,"对话识别开始",Toast.LENGTH_SHORT,).show();
                   startRecognize();
                   result.success("sucess");
                 }
 
                 if(call.method.equals("stop")){
-                  Toast.makeText(MainActivity.this,"对话识别停止",Toast.LENGTH_SHORT).show();
+                 // Toast.makeText(MainActivity.this,"对话识别停止",Toast.LENGTH_SHORT).show();
                   stopRecognize();
                   result.success("stop");
                 }
@@ -103,10 +103,14 @@ public class MainActivity extends FlutterActivity {
             mapresult.put("resultFrom",resultFrom);
             mapresult.put("resultTo",resultTo);
             MethodChannelPlugin.registerWith(getFlutterView()).invokeMethod("result",mapresult);
-//            MethodChannelPlugin.registerWith(getFlutterView()).invokeMethod("resultByasr",mapresult);
           } else { // 翻译出错
             Log.d(TAG, "语音翻译出错 错误码：" + result.getError() + " 错误信息：" + result.getErrorMsg());
-            Toast.makeText(MainActivity.this,"暂不支持此语言的语言翻译",Toast.LENGTH_SHORT).show();
+            if(result.getError()==607001){
+              Toast.makeText(MainActivity.this,"识别失败请重试，或提高音频质量",Toast.LENGTH_SHORT).show();
+            }
+            if(result.getError()==58001){
+              Toast.makeText(MainActivity.this, "暂不支持此语言的语言翻译", Toast.LENGTH_SHORT).show();
+            }
             // String  error=result.getError()+result.getErrorMsg();
           }
         }
@@ -178,6 +182,18 @@ public static void verifyAudioPermissions(Activity activity) {
             GET_RECODE_AUDIO);
   }
 }
+
+  public void onResume() {
+    super.onResume();
+    MobclickAgent.onResume(this);
+
+  }
+
+  public void onPause() {
+    super.onPause();
+    MobclickAgent.onPause(this);
+  }
+
 
 
 }

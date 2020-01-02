@@ -7,6 +7,9 @@ import 'package:traveltranslation/model/history.dart';
 import 'package:traveltranslation/model/transresult.dart';
 import 'package:traveltranslation/model/word.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
+import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
+import 'package:traveltranslation/ocr/util/user_utils.dart';
+import 'package:traveltranslation/ocr/widget/dialog/lead_login_dialog.dart';
 import 'package:traveltranslation/page/body_page.dart';
 import 'package:traveltranslation/page/toast.dart';
 import 'package:traveltranslation/utils/event_bus.dart';
@@ -40,6 +43,11 @@ class _ShuRuPageState extends State<ShuRuPage> {
       });
     });
   }
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void getValue() async{
     From=await TravelSP.getFromValue();
     To=await TravelSP.getToValue();
@@ -51,12 +59,12 @@ class _ShuRuPageState extends State<ShuRuPage> {
     });
   }
 
-  String get _appid => "20191128000361129";
+  String get _appid => "20190809000325332";
 
-  String get _securityKey => "vfgIbXmgf4cs1jP8lhrq";
+  String get _securityKey => "luTbBoWAQY3uGV8rtxog";
   DatabaseHelper_history databaseHelper = DatabaseHelper_history();
-  static final String appid = "20191128000361129";
-  static final String securityKey = "vfgIbXmgf4cs1jP8lhrq";
+  static final String appid = "20190809000325332";
+  static final String securityKey = "luTbBoWAQY3uGV8rtxog";
   final TextEditingController controller = TextEditingController();
 
 
@@ -77,13 +85,13 @@ class _ShuRuPageState extends State<ShuRuPage> {
                 IndexBody(),
                 Container(
                     height: ScreenUtil.instance.setHeight(175),
-                    padding: EdgeInsets.only(left: 15.0,top: 5.0),
+                    padding: EdgeInsets.only(left: ScreenUtil.instance.setWidth(15.0),top: ScreenUtil.instance.setHeight(5.0)),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         border: Border(
                           bottom: BorderSide(
                             width: 0.5,
-                            color: Colors.grey[500],
+                            color: Colors.grey[200],
                           ),
                         )),
                     child:Row(
@@ -152,17 +160,33 @@ class _ShuRuPageState extends State<ShuRuPage> {
                                     onPressed: () async {
                                       //翻译内容 并跳转到翻译详情页
                                       //翻译并跳转
-                                      String url = getTransResult(text1, From, To);
-                                      History word = await getresult(url);
-                                      eventBus.fire(ListEvent("change"));
-                                      if (word != null) {
-                                        //ListKey.currentState.updateListView();
-                                        Navigator.push(
-                                            context,
-                                            new MaterialPageRoute(
-                                                builder: (context) => new DetailPage(
-                                                  word: word,
-                                                )));
+                                      int time1=await TravelSP.getTRTime();
+                                      if(UserDelegate.userStatus==UserStatus.GUEST&&time1>=15){
+                                        showDialog<Null>(
+                                            context: context, //BuildContext对象
+                                            barrierDismissible: false,
+                                            builder: (BuildContext context) {
+                                              return new LeadLoginDialog();
+                                            }).then((value) {});
+                                      }else {
+                                        EventUtil.onEvent(
+                                            EventUtil.translateClick);
+                                        String url = getTransResult(
+                                            text1, From, To);
+                                        History word = await getresult(url);
+                                        eventBus.fire(ListEvent("change"));
+                                        if (word != null) {
+                                          int time = time1 + 1;
+                                          TravelSP.saveTRTime(time);
+                                          //ListKey.currentState.updateListView();
+                                          Navigator.push(
+                                              context,
+                                              new MaterialPageRoute(
+                                                  builder: (context) =>
+                                                  new DetailPage(
+                                                    word: word,
+                                                  )));
+                                        }
                                       }
                                     },
                                     icon: Image(

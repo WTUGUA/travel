@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:traveltranslation/anim/animtest_page.dart';
 import 'package:traveltranslation/anim/test.dart';
@@ -6,6 +8,7 @@ import 'package:traveltranslation/model/asr.dart';
 import 'package:traveltranslation/model/history.dart';
 import 'package:traveltranslation/model/word.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
+import 'package:traveltranslation/page/detail_page.dart';
 import 'package:traveltranslation/page/toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -64,6 +67,13 @@ class _AsrTestState extends State<AsrTest> {
       History history = new History(TextFrom, TextTo, 0);
       databaseHelper.insertHistory(history);
       eventBus.fire(ListEvent("change"));
+      Navigator.push(
+          context,
+          new MaterialPageRoute(
+              builder: (context) =>
+              new DetailPage(
+                word: history,
+              )));
       //
     });
   }
@@ -81,7 +91,7 @@ class _AsrTestState extends State<AsrTest> {
       child: Stack(
         children: <Widget>[
           Positioned(
-            bottom: 20,
+            bottom: ScreenUtil.instance.setHeight(20),
             child:Container(
               height: ScreenUtil.instance.setHeight(280),
               width: ScreenUtil.instance.setWidth(360),
@@ -98,8 +108,8 @@ class _AsrTestState extends State<AsrTest> {
             ),
           ),
           Positioned(
-            top: 40,
-            left: 145,
+            top: ScreenUtil.instance.setHeight(40),
+            left: ScreenUtil.instance.setWidth(145),
             child: Text(
               '请讲中文',
               style: TextStyle(
@@ -108,8 +118,8 @@ class _AsrTestState extends State<AsrTest> {
             ),
           ),
           Positioned(
-            top: 210,
-            left: 115,
+            top: ScreenUtil.instance.setHeight(210),
+            left: ScreenUtil.instance.setWidth(115),
             child: Container(
               height: ScreenUtil.instance.setHeight(44),
               width: ScreenUtil.instance.setWidth(140),
@@ -120,8 +130,8 @@ class _AsrTestState extends State<AsrTest> {
                       setState(() {
                         _setstart(from, to);
                         start = true;
+                        Toast.toast(context,msg: "开始语音识别",position: ToastPostion.center);
                         checktext="完成";
-
                       });
                     } else {
                       setState(() {
@@ -141,10 +151,10 @@ class _AsrTestState extends State<AsrTest> {
             ),
           ),
           Positioned(
-            top: 250,
-            left: 160,
+            top: ScreenUtil.instance.setHeight(10),
+            left: ScreenUtil.instance.setWidth(320),
             child: IconButton(
-                padding: EdgeInsets.only(top: 20.0),
+                padding: EdgeInsets.only(top: ScreenUtil.instance.setHeight(20)),
                 onPressed: () {
                   //退出界面
                   Navigator.of(context).pop();
@@ -160,29 +170,42 @@ class _AsrTestState extends State<AsrTest> {
 
   //传值开启语音输入
   Future<Null> _setstart(String From, String To) async {
-    // ASR asr=new ASR(from,to,"start");
-    Map<String, Object> map = {"from": From, "to": To};
-    String result2 = "";
-    //  Toast.toast(context,msg: "请求访问失败",position: ToastPostion.bottom);
-    try {
-      //尝试传值测试指定传 实际需要传递map（源语言 目标语言 开始信息）
-      final String result = await platform.invokeMethod("start", map);
-      result2 = result;
-    } on PlatformException catch (e) {
-      result2 = "Failed to get battery level: '${e.message}'.";
+    //添加IOS与android的区分调用
+    if(Platform.isAndroid) {
+      // ASR asr=new ASR(from,to,"start");
+      Map<String, Object> map = {"from": From, "to": To};
+      String result2 = "";
+      //  Toast.toast(context,msg: "请求访问失败",position: ToastPostion.bottom);
+      try {
+        //尝试传值测试指定传 实际需要传递map（源语言 目标语言 开始信息）
+        final String result = await platform.invokeMethod("start", map);
+        result2 = result;
+      } on PlatformException catch (e) {
+        result2 = "Failed to get battery level: '${e.message}'.";
+      }
+    }else{
+      //iOS端调用语音翻译
+
     }
   }
 
 //结束语音识别
   Future<Null> _setstop() async {
-    String result1;
-    try {
-      //Toast.toast(context,msg: "请求访问失败",position: ToastPostion.bottom);
-      final String result = await platform.invokeMethod('stop');
-      result1 = result;
-      print(result);
-    } on PlatformException catch (e) {
-      result1 = "Failed to get battery level: '${e.message}'.";
+    //添加IOS与android的区分调用
+    if(Platform.isAndroid) {
+      String result1;
+      try {
+        //Toast.toast(context,msg: "请求访问失败",position: ToastPostion.bottom);
+        final String result = await platform.invokeMethod('stop');
+        result1 = result;
+        print(result);
+      } on PlatformException catch (e) {
+        result1 = "Failed to get battery level: '${e.message}'.";
+      }
+    }else{
+      //IOS调用语音翻译
+
+
     }
   }
 

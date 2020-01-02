@@ -42,7 +42,7 @@ class ServiceApi {
 
   //ios支付回调地址
   static String iosCallBackUrl = serviceUrl + "/v1/user/add_ios_id";
-
+//文字识别
   static Future<TransEntity> getTransResultText(
       String originText, String transTo) async {
     var dio = new Dio(new BaseOptions(

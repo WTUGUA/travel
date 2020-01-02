@@ -63,8 +63,8 @@ class LanguageUtil {
 
 class Constants {
   //ocr上线需要的appid
-  static final String ocr_key = "XGYRz0esvB9kodjNuBuWLZuy";
-  static final String ocr_secret = "MZPXllAlaxpYNtkgM8cQPfRAymiY8uPQ";
+  static final String ocr_key = "ALj4mQo1O496ZGZ9vqSz2XeF";
+  static final String ocr_secret = "Y9sRy3a6hPXRdaTUeG9IPktte9gOETwr";
 
 
   //ios测试appkey
