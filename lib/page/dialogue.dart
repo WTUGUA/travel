@@ -351,8 +351,6 @@ class _DialogueState extends State<Dialogue> {
                                           reversal = 2;
                                           //  istrue=false;
                                         });
-//                              Navigator.of(context).pop();
-////                              print('延时1s执行');
                                       });
                                     },
                                     icon: start

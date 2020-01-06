@@ -38,8 +38,8 @@ class _FullPageState extends State<FullPage> {
                         fit: BoxFit.fill,
                         //  alignment: Alignment.centerRight,
                         child: Container(
-                          height:200,
-                          width:300,
+                          height:ScreenUtil.instance.setHeight(200),
+                          width:ScreenUtil.instance.setWidth(300),
                           child:Center(
                             child:
                             AutoSizeText(
