@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:traveltranslation/model/select.dart';
 
@@ -10,6 +12,8 @@ class TravelSP{
   static const String KEY_Ocr_Time = "key_Ocr_Time";
   static const String KEY_Time="Key_Time";
   static const String KEY_TR_Time="Key_Tr_Time";
+  static const String KEY_Code="Key_Code";
+  static const String KEY_CONFIG = "key_val_config";
   ///保存隐私弹窗
   static Future<bool> savePrivacy(bool token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -86,24 +90,24 @@ class TravelSP{
       return ocrtime;
     }
   }
-  ///保存时间
-  static Future<bool> saveTime(String to) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.setString(KEY_Time, to);
-
-  }
-
-  ///获取保存的时间
-  static Future<String> getTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String time=prefs.getString(KEY_Time);
-    if(time==null){
-      print("time=$time");
-      return null;
-    }else {
-      return prefs.getString(KEY_Time);
-    }
-  }
+//  ///保存时间
+//  static Future<bool> saveTime(String to) async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    return prefs.setString(KEY_Time, to);
+//
+//  }
+//
+//  ///获取保存的时间
+//  static Future<String> getTime() async {
+//    SharedPreferences prefs = await SharedPreferences.getInstance();
+//    String time=prefs.getString(KEY_Time);
+//    if(time==null){
+//      print("time=$time");
+//      return null;
+//    }else {
+//      return prefs.getString(KEY_Time);
+//    }
+//  }
   ///保存时间
   static Future<bool> saveTRTime(int to) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -119,6 +123,39 @@ class TravelSP{
       return 0;
     }else {
       return prefs.getInt(KEY_TR_Time);
+    }
+  }
+  ///保存版本
+  static Future<bool> saveCode(int to) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setInt(KEY_Code, to);
+  }
+
+  ///获取保存的版本
+  static Future<int> getCode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int time=prefs.getInt(KEY_Code);
+    if(time==null){
+      return 1;
+    }else {
+      return prefs.getInt(KEY_Code);
+    }
+  }
+  /// 保存后台KV配置数据
+  static Future<bool> saveConfigMap(String data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString(KEY_CONFIG, data);
+  }
+
+  ///获取后台KV配置数据
+  static Future<Map<String, dynamic>> getConfigMap() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var configData = prefs.get(KEY_CONFIG);
+
+    if (configData != null) {
+      return Future<Map<String, dynamic>>.value(json.decode(configData));
+    } else {
+      return Future.value(null);
     }
   }
 }

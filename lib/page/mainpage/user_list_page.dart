@@ -5,6 +5,7 @@ import 'package:traveltranslation/ocr/config/app_color.dart';
 import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/ocr/widget/dialog/feedback_dialog.dart';
 import 'package:traveltranslation/ocr/widget/dialog/offline_dialog.dart';
+import 'package:traveltranslation/page/login/web_view.dart';
 import 'package:traveltranslation/page/mainpage/about_page.dart';
 import 'package:traveltranslation/page/toast.dart';
 
@@ -155,6 +156,89 @@ class _UserListPageState extends State< UserListPage> {
               ],
             ),
           ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new WebViewPage(word: 0)));
+                },
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: ScreenUtil.instance.setWidth(15),
+                      height: ScreenUtil.instance.setHeight(60),
+                    ),
+                    Image(
+                      height: ScreenUtil.instance.setHeight(24),
+                      width: ScreenUtil.instance.setWidth(24),
+                      image: AssetImage("images/mine_icon_privacy.png"),
+                    ),
+                    Container(
+                      width: ScreenUtil.instance.setWidth(14),
+                    ),
+                    Expanded(
+                      child:Text('隐私政策',style: TextStyle(
+                          fontSize: 16, color: AppColor.privacyText1Color)),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        //跳转到界面
+                      },
+                      icon: Image(
+                        height: ScreenUtil.instance.setHeight(24),
+                        width: ScreenUtil.instance.setWidth(24),
+                        image: AssetImage("images/icon_chevron_right.png"),
+                      ),
+                    ),
+                    Container(
+                      width: ScreenUtil.instance.setWidth(15),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new WebViewPage(word: 1)));
+                },
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      width: ScreenUtil.instance.setWidth(15),
+                      height: ScreenUtil.instance.setHeight(60),
+                    ),
+                    Image(
+                      height: ScreenUtil.instance.setHeight(24),
+                      width: ScreenUtil.instance.setWidth(24),
+                      image: AssetImage("images/mine_icon_service.png"),
+                    ),
+                    Container(
+                      width: ScreenUtil.instance.setWidth(14),
+                    ),
+                    Expanded(
+                      child:Text('服务条款',style: TextStyle(
+                          fontSize: 16, color: AppColor.privacyText1Color)),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        //跳转到界面
+                      },
+                      icon: Image(
+                        height: ScreenUtil.instance.setHeight(24),
+                        width: ScreenUtil.instance.setWidth(24),
+                        image: AssetImage("images/icon_chevron_right.png"),
+                      ),
+                    ),
+                    Container(
+                      width: ScreenUtil.instance.setWidth(15),
+                    ),
+                  ],
+                ),
+              ),
+
          GestureDetector(
            onTap: (){
              //跳转离线翻译

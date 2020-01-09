@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_ads/ads_splashview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:traveltranslation/ocr/config/application.dart';
+import 'package:traveltranslation/ocr/util/navo_kv_utils.dart';
 import 'package:traveltranslation/page/login/privacy.dart';
+import 'package:traveltranslation/utils/travel_kv_utils.dart';
 import 'package:traveltranslation/utils/travelsp.dart';
 
 class Splash extends StatefulWidget {
@@ -15,6 +17,7 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
+    TravelOnlineConfigUtils.getInstance().init();
     getPrivacy();
     super.initState();
   }
@@ -30,6 +33,18 @@ class _SplashState extends State<Splash> {
         sp = true;
       });
     }
+//    //获取KV键值对
+//    String ys=await OnlineConfigUtils.getInstance().getConfigParams("ocr_num");
+//    int private=int.parse(ys);
+//    print("测试类"+ys);
+//    int code=await TravelSP.getCode();
+//    if(code<private){
+//      setState(() {
+//        sp=false;
+//      });
+//      TravelSP.saveCode(private);
+//    }
+
   }
 
   @override

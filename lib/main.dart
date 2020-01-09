@@ -4,7 +4,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:traveltranslation/ocr/components/setting/login_component.dart';
 import 'package:traveltranslation/ocr/components/setting/widgets/loginwithvip_component.dart';
-import 'package:traveltranslation/ocr/util/navo_kv_utils.dart';
+
 import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/ocr/util/user_utils.dart';
 import 'package:traveltranslation/page/login/privacy.dart';
@@ -14,6 +14,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'ocr/config/application.dart';
 import 'ocr/config/routes.dart';
 import 'ocr/util/free_try_utils.dart';
+import 'ocr/util/ipa_utils.dart';
+import 'ocr/util/navo_kv_utils.dart';
 
 
 //void main() => runApp(MyApp(
@@ -33,9 +35,10 @@ Future<void> main() async {
   OnlineConfigUtils.getInstance().init();
   //初始化umeng
   EventUtil.init();
+  //初始化IOS商品列表
+  IpaUtils.initStoreInfo();
   print(first);
   if(first==null){
-//    TravelSP.savePrivacy(false);
   TravelSP.saveFrom("简体中文");
   TravelSP.saveFromValue("zh");
   TravelSP.saveTo("英语");

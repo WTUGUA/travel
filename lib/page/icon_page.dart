@@ -143,25 +143,25 @@ class _IconDemoState extends State<IconDemo> {
       ],
     );
   }
-void updateTime() async{
-  String time=await TravelSP.getTime();
-  DateTime now = DateTime.now();
-  print("时间"+now.toString());
-  if(time!=null){
-    //进行计算判断差值
-    differenceTime(DateTime.parse(time),now);
-  }
-  TravelSP.saveTime(now.toString());
-  print("时间+$time");
-}
-void differenceTime(DateTime time1,DateTime time2){
-  Duration duration = time2.difference(time1);
-  print(duration.inDays.toString());
-  int day=duration.inDays;
-  if(day>0){
-    TravelSP.saveOcrTime(0);
-  }
-}
+//void updateTime() async{
+//  String time=await TravelSP.getTime();
+//  DateTime now = DateTime.now();
+//  print("时间"+now.toString());
+//  if(time!=null){
+//    //进行计算判断差值
+//    differenceTime(DateTime.parse(time),now);
+//  }
+//  TravelSP.saveTime(now.toString());
+//  print("时间+$time");
+//}
+//void differenceTime(DateTime time1,DateTime time2){
+//  Duration duration = time2.difference(time1);
+//  print(duration.inDays.toString());
+//  int day=duration.inDays;
+//  if(day>0){
+//    TravelSP.saveOcrTime(0);
+//  }
+//}
   void ShowArsDialog() {
     //跳转到语音界面
     showModalBottomSheet(

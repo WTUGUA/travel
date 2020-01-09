@@ -2,7 +2,7 @@
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:traveltranslation/ocr/components/vip/vip_ios_component.dart';
 
-
+//iOS支付初始化
 const bool kAutoConsume = true;
 const List<String> _kProductIds = <String>[
   'jiangji.op.Subscription.1month',

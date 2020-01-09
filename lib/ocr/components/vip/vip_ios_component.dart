@@ -18,7 +18,7 @@ import 'package:traveltranslation/ocr/util/umeng_event_util.dart';
 import 'package:traveltranslation/ocr/util/user_utils.dart';
 
 import 'consumablestore.dart';
-
+//IOS支付界面
 const bool kAutoConsume = true;
 const String _kConsumableId = 'jiangji.op.Subscription.1month';
 const List<String> _kProductIds = <String>[

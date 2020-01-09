@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:traveltranslation/ocr/config/application.dart';
+import 'package:traveltranslation/page/login/web_view.dart';
 import 'package:traveltranslation/utils/travelsp.dart';
 import 'package:traveltranslation/ocr/config/app_color.dart';
 
@@ -51,8 +52,10 @@ class _PrivacyState extends State<Privacy> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                         //设置页面跳转
-
-
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new WebViewPage(word: 1)));
                           print('点击了服务条款');
                         },
                     ),
@@ -66,8 +69,10 @@ class _PrivacyState extends State<Privacy> {
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
                         //设置页面跳转
-
-
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new WebViewPage(word: 0)));
                           print('点击了隐私政策');
                         },
                     ),
